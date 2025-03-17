@@ -1,14 +1,11 @@
 import json
 import csv
-
-# 1.1 is to read in the defintions file, and process it
 def load_vocab_from_json(file_path):
     '''Load vocab data from a json file'''
     with open(file_path, 'r') as f:
         data = json.load(f)
 
-    # use a for loop, to loop over every word and instnatiate a new instance of the class for that word, and add it to the dictionary
-  result = {}
+    result = {}
     for word, definition in data.items():
         result[word] = VocabCard(word, definition) 
     return result 
@@ -20,9 +17,6 @@ def write_list_to_csv(words_list, output_file):
         for word in words_list:
             writer.writerow([word])
 
-# 1.2 create a complex object that keeps track of a whole lot of properties about the word, or attributes / therefore we need to define a class for this object
-# 1.2.1 we're going to need to define a bunch of methods (functions specific to a class that are kind of like actions - such as a method, that we can use to automatically handle a word encounter)
-# 1.3 instantiate this class/object for every word
 class VocabCard:
     '''Represents a single vocab card'''
     def __init__(self, word, defintion, repetitions=0, interval=1, ease_factor=2.5, review_counter=0, is_new=True):
@@ -32,7 +26,7 @@ class VocabCard:
         self.repetitions = repetitions
         self.interval = interval
         self.ease_factor = ease_factor
-        self.review_counter = review_counter # when this reaches 0, the word is due for review
+        self.review_counter = review_counter 
         self.is_new = is_new
     
     def update_card(self):
@@ -44,11 +38,11 @@ class VocabCard:
         else: 
             self.interval = round(self.interval * self.ease_factor)
 
-        # self.repetitions = self.repetitions + 1 (see upgrade below)
+    
         self.repetitions += 1
         self.is_new = False
 
-        self.ease_factor = max(1.3, self.ease_factor + 0.1) # increment ease factor slightly
+        self.ease_factor = max(1.3, self.ease_factor + 0.1) 
 
         self.review_counter = self.interval
 
@@ -57,12 +51,12 @@ class VocabCard:
         return self.repetitions >= max_repetitions
 
 
-# 1.4 we can create the spaced repetition algorithm that we'll use to create this long list that cleverly introduces new words, and tests old words at the appropriate intervals
+
 def show_word_status(vocab_cards):
     '''Displays the current status of the words, and also returns the due words (which is a list)'''
     due_words = []
     for card in vocab_cards.values():
-        # one by one, check the vocab card class assigned to each word and see if it's due for review, and if so add it to our array/list of due words
+       
         if card.review_counter <= 0 and not card.is_new:
             due_words.append(card)
 
@@ -70,10 +64,9 @@ def show_word_status(vocab_cards):
 
 def review_session(vocab_cards, max_repetitions=5):
     '''Reviews words until all are ordered / mastered'''
-    history = [] # Tracks the order of words reviewed or introduced
+    history = []
     total_words_reviewed = 0
 
-    # write spaced repetition algorithm
     while True:
         # Reduce the review counter for all words
         for card in vocab_cards.values():
