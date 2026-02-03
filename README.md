@@ -1,3 +1,3 @@
 # Learning-tool
 
-Spaced repetition algorithm that processes a dictionary of words and definitions, organizes them for efficient learning, and saves the final sequence to a CSV file. Then, I'll build a quiz game to test my knowledge. If I get a question wrong, I'll receive a score and start over.
+Spaced repetition algorithm that processes a dictionary of words and definitions, organizes them for efficient learning, and saves the final sequence to a CSV file. Then, a quiz game to test knowledge. If u get a question wrong, u'll receive a score and start over.
